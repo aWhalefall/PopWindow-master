@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/PopWindow-master.iml" filepath="$PROJECT_DIR$/.idea/modules/PopWindow-master.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/PopWindow-master.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/PopWindow-master.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/PopWindow-master.library.iml" filepath="$PROJECT_DIR$/.idea/modules/library/PopWindow-master.library.iml" />
+    </modules>
+  </component>
+</project>

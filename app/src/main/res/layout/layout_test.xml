@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical">
+    <RelativeLayout
+        android:background="@color/colorAccent"
+        android:paddingTop="14dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp">
 
     <TextView
+        android:id="@+id/txt_demo"
         android:background="@android:color/white"
         android:layout_marginTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:gravity="center"
         android:text="自定义View" />
+    </RelativeLayout>
 
 </LinearLayout>

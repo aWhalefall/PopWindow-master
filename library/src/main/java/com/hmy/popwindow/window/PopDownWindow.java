@@ -3,12 +3,17 @@ package com.hmy.popwindow.window;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
@@ -20,9 +25,11 @@ import com.hmy.popwindow.PopItemAction;
 import com.hmy.popwindow.PopSimpleAnimationListener;
 import com.hmy.popwindow.PopWindow;
 import com.hmy.popwindow.R;
+import com.hmy.popwindow.TipsUtil;
 import com.hmy.popwindow.view.PopDownView;
 import com.hmy.popwindow.viewinterface.PopWindowInterface;
 
+import java.lang.reflect.Method;
 import java.util.TimerTask;
 
 /**
@@ -53,8 +60,7 @@ public class PopDownWindow extends PopupWindow implements PopWindowInterface, Vi
     }
 
     public PopDownWindow(Activity activity, CharSequence title, CharSequence message, PopWindow popWindow) {
-        LayoutInflater inflater = (LayoutInflater) activity
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mPopWindowLayout = inflater.inflate(R.layout.pop_down_window, null);
         this.setContentView(mPopWindowLayout);
         this.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
@@ -62,10 +68,8 @@ public class PopDownWindow extends PopupWindow implements PopWindowInterface, Vi
         this.setFocusable(true);
         this.setOutsideTouchable(true);
         this.setAnimationStyle(R.style.PopDownWindow);
-
         mActivity = activity;
         mPopWindow = popWindow;
-
         initRootView(mPopWindowLayout);
         initContentView(mPopWindowLayout, title, message);
         setListener();
@@ -118,7 +122,6 @@ public class PopDownWindow extends PopupWindow implements PopWindowInterface, Vi
                 Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, -1.0f);
         mPopCloseAnimation.setDuration(mActivity.getResources().getInteger(R.integer.pop_animation_duration));
         mPopCloseAnimation.setFillAfter(true);
-
         mPopOpenAnimation.setAnimationListener(new PopSimpleAnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -132,8 +135,9 @@ public class PopDownWindow extends PopupWindow implements PopWindowInterface, Vi
             public void onAnimationEnd(Animation animation) {
                 if (mCustomView != null) {
                     mContentLayout.post(mDismissRunnable);
-                } else
+                } else {
                     mPopDownView.post(mDismissRunnable);
+                }
             }
 
             @Override
@@ -166,7 +170,7 @@ public class PopDownWindow extends PopupWindow implements PopWindowInterface, Vi
             } else {
                 throw new RuntimeException("必须至少添加一个PopItemView");
             }
-            
+
             if (Build.VERSION.SDK_INT < 24) {
                 showAsDropDown(view);
             } else {
@@ -174,13 +178,15 @@ public class PopDownWindow extends PopupWindow implements PopWindowInterface, Vi
                 view.getGlobalVisibleRect(visibleFrame);
                 int height = view.getResources().getDisplayMetrics().heightPixels - visibleFrame.bottom;
                 setHeight(height);
-                showAsDropDown(view, 0, 0);
+                showAsDropDown(view);
             }
+            TipsUtil.setBackgroundAlpha(mActivity,0.6f);
         }
     }
 
     @Override
     public void dismiss() {
+        TipsUtil.setBackgroundAlpha(mActivity,1f);
         executeExitAnim();
     }
 
@@ -188,8 +194,9 @@ public class PopDownWindow extends PopupWindow implements PopWindowInterface, Vi
         if (!mIsDismissed) {
             if (mCustomView != null) {
                 mContentLayout.startAnimation(mPopCloseAnimation);
-            } else
+            } else {
                 mPopDownView.startAnimation(mPopCloseAnimation);
+            }
         }
     }
 

@@ -88,6 +88,12 @@ public class MainActivity extends Activity {
         View customView = View.inflate(this, R.layout.layout_test, null);
         new PopWindow.Builder(this)
                 .setStyle(PopWindow.PopWindowStyle.PopDown)
+                .setOnDismissListener(new PopupWindow.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+                        Toast.makeText(MainActivity.this,"fasdfasd",1000).show();
+                    }
+                })
                 .setView(customView)
                 .setPopWindowMargins(dip2px(20), dip2px(0), dip2px(20), dip2px(0))
                 .show(customView);

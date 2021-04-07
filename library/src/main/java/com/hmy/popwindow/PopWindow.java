@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.PopupWindow;
 
 import com.hmy.popwindow.viewinterface.PopWindowInterface;
 import com.hmy.popwindow.window.PopAlertDialog;
@@ -32,6 +33,7 @@ public class PopWindow implements PopWindowInterface,
     private Animation mControlViewOpenAnimation;
     private Animation mControlViewCloseAnimation;
     private boolean mIsShowControlViewAnim;
+    private PopupWindow.OnDismissListener onDismissListener;
 
     public PopWindow(Activity activity, int titleResId, int messageResId, PopWindowStyle style) {
         this(activity, titleResId == 0 ? null : activity.getString(titleResId), messageResId == 0 ? null : activity.getString(messageResId), style);
@@ -39,6 +41,15 @@ public class PopWindow implements PopWindowInterface,
 
     public PopWindow(Activity activity, CharSequence title, CharSequence message, PopWindowStyle style) {
         mActivity = activity;
+        setTitle(title);
+        setMessage(message);
+        setStyle(style);
+        initPopWindow(activity, title, message);
+    }
+
+    public PopWindow(Activity activity, CharSequence title, CharSequence message, PopWindowStyle style, PopupWindow.OnDismissListener onDismissListener) {
+        mActivity = activity;
+        this.onDismissListener = onDismissListener;
         setTitle(title);
         setMessage(message);
         setStyle(style);
@@ -55,6 +66,9 @@ public class PopWindow implements PopWindowInterface,
             mPopUpWindow = new PopUpWindow(activity, title, message, this);
         } else if (mStyle == PopWindowStyle.PopDown) {
             mPopDownWindow = new PopDownWindow(activity, title, message, this);
+            if (onDismissListener != null) {
+                mPopDownWindow.setOnDismissListener(onDismissListener);
+            }
         } else if (mStyle == PopWindowStyle.PopAlert) {
             mPopAlertDialog = new PopAlertDialog(activity, title, message, this);
         }
@@ -191,6 +205,7 @@ public class PopWindow implements PopWindowInterface,
         private CharSequence message;
         private PopWindowStyle style = PopWindowStyle.PopUp;
         private PopWindow popWindow;
+        private PopupWindow.OnDismissListener onDismissListener;
 
         public Builder(Activity activity) {
             this.activity = activity;
@@ -263,7 +278,11 @@ public class PopWindow implements PopWindowInterface,
 
         public PopWindow create() {
             if (popWindow == null) {
-                popWindow = new PopWindow(activity, title, message, style);
+                if (onDismissListener != null) {
+                    popWindow = new PopWindow(activity, title, message, style,onDismissListener);
+                } else {
+                    popWindow = new PopWindow(activity, title, message, style);
+                }
             }
             return popWindow;
         }
@@ -278,6 +297,10 @@ public class PopWindow implements PopWindowInterface,
             return show(null);
         }
 
+        public Builder setOnDismissListener(PopupWindow.OnDismissListener onDismissListener) {
+            this.onDismissListener = onDismissListener;
+            return this;
+        }
     }
 
     public void show() {

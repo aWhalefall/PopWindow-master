@@ -3,7 +3,8 @@
     android:id="@+id/layout_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/pop_bg_translucent_half">
+   >
+<!--    android:background="@color/pop_bg_translucent_half"-->
 
     <FrameLayout
         android:id="@+id/layout_contain"

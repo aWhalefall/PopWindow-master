@@ -67,9 +67,13 @@ public class PopDownWindow extends PopupWindow implements PopWindowInterface, Vi
         this.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
         this.setFocusable(true);
         this.setOutsideTouchable(true);
+//        this.setBackgroundDrawable(new ColorDrawable(0xff0000));
         this.setAnimationStyle(R.style.PopDownWindow);
         mActivity = activity;
         mPopWindow = popWindow;
+//        WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
+//        lp.alpha = 0.5f; //0.0-1.0
+//        activity.getWindow().setAttributes(lp);
         initRootView(mPopWindowLayout);
         initContentView(mPopWindowLayout, title, message);
         setListener();
@@ -126,7 +130,7 @@ public class PopDownWindow extends PopupWindow implements PopWindowInterface, Vi
             @Override
             public void onAnimationStart(Animation animation) {
                 mIsDismissed = false;
-                mRootLayout.startAnimation(mAlphaOpenAnimation);
+               // mRootLayout.startAnimation(mAlphaOpenAnimation);
             }
         });
 
@@ -144,12 +148,12 @@ public class PopDownWindow extends PopupWindow implements PopWindowInterface, Vi
             public void onAnimationStart(Animation animation) {
                 mIsDismissed = true;
                 onStartDismiss(PopDownWindow.this);
-                mRootLayout.startAnimation(mAlphaCloseAnimation);
+               // mRootLayout.startAnimation(mAlphaCloseAnimation);
             }
         });
 
-        mAlphaOpenAnimation = AnimationUtils.loadAnimation(mActivity, R.anim.pop_alpha_enter);
-        mAlphaCloseAnimation = AnimationUtils.loadAnimation(mActivity, R.anim.pop_alpha_exit);
+//        mAlphaOpenAnimation = AnimationUtils.loadAnimation(mActivity, R.anim.pop_alpha_enter);
+//        mAlphaCloseAnimation = AnimationUtils.loadAnimation(mActivity, R.anim.pop_alpha_exit);
     }
 
     private Runnable mDismissRunnable = new Runnable() {
@@ -180,13 +184,13 @@ public class PopDownWindow extends PopupWindow implements PopWindowInterface, Vi
                 setHeight(height);
                 showAsDropDown(view);
             }
-            TipsUtil.setBackgroundAlpha(mActivity,0.6f);
+            //TipsUtil.setBackgroundAlpha(mActivity, 1f);
         }
     }
 
     @Override
     public void dismiss() {
-        TipsUtil.setBackgroundAlpha(mActivity,1f);
+       // TipsUtil.setBackgroundAlpha(mActivity, 1f);
         executeExitAnim();
     }
 

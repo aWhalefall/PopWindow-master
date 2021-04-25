@@ -1,18 +1,16 @@
 package com.hmy.popwindow.demo;
 
 import android.app.Activity;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.hmy.popwindow.PopItemAction;
 import com.hmy.popwindow.PopWindow;
-import com.hmy.popwindow.demo.R;
+
+import org.json.JSONObject;
 
 public class MainActivity extends Activity {
 
@@ -157,22 +155,22 @@ public class MainActivity extends Activity {
         return (int) (dpValue * scale + 0.5f);
     }
 
-    public void click10(View view) {
-        final PopupWindow popupWindow = new PopupWindow(MainActivity.this);
-        View customView = View.inflate(this, R.layout.layout_test, null);
-        customView.findViewById(R.id.txt_demo).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupWindow.dismiss();
-            }
-        });
-        popupWindow.setAnimationStyle(com.hmy.popwindow.R.style.PopDownWindow);
-        popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
-        popupWindow.setOutsideTouchable(false);
-        popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-        popupWindow.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
-        popupWindow.setContentView(customView);
-        popupWindow.setFocusable(false);
-        popupWindow.showAtLocation(view, Gravity.TOP,-50,-50);
-    }
+//    public void click10(View view) {
+//        final PopupWindow popupWindow = new PopupWindow(MainActivity.this);
+//        View customView = View.inflate(this, R.layout.layout_test, null);
+//        customView.findViewById(R.id.txt_demo).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                popupWindow.dismiss();
+//            }
+//        });
+//        popupWindow.setAnimationStyle(com.hmy.popwindow.R.style.PopDownWindow);
+//        popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
+//        popupWindow.setOutsideTouchable(false);
+//        popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+//        popupWindow.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
+//        popupWindow.setContentView(customView);
+//        popupWindow.setFocusable(false);
+//        popupWindow.showAtLocation(view, Gravity.TOP,-50,-50);
+//    }
 }
